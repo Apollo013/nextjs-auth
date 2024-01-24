@@ -3,7 +3,6 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
-    // https://next-auth.js.org/configuration/providers
     providers: [
         GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID as string,
@@ -12,11 +11,22 @@ export const options: NextAuthOptions = {
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
-                password: { label: "Password", type: "password" },
+                username: {
+                    label: "Username:",
+                    type: "text",
+                    placeholder: "username",
+                },
+                password: {
+                    label: "Password:",
+                    type: "password",
+                    placeholder: "password",
+                },
             },
             async authorize(credentials) {
-                const user = { id: 1, name: "J Smith", password: "password1" };
+                // This is where you need to retrieve user data
+                // to verify with credentials
+                // Docs: https://next-auth.js.org/configuration/providers/credentials
+                const user = { id: "42", name: "Paul", password: "password1" };
 
                 if (credentials?.username === user.name && credentials?.password === user.password) {
                     return user;
